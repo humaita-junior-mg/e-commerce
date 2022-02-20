@@ -1,4 +1,6 @@
-import { UsersRepository } from "../../repositories/UsersRepository";
+
+import { UsersRepository } from "../../repositories/UsersRepository"
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 interface IRequest{
@@ -12,15 +14,17 @@ export class LoginUseCase{
 
     execute({email, password}: IRequest): string{
 
-        const accountToLogin = this.usersRepository.findUserByEmail(email)
+        const listUsers = this.usersRepository.list()
+
+        const accountToLogin = listUsers.find(user => user.email === email)
 
         if(!accountToLogin){
             throw new Error("Email or password is incorrect")
         }
 
-        const tryLog = this.usersRepository.login(accountToLogin, password)
+        const userVerify = bcrypt.compareSync(password, accountToLogin.password)  
 
-        if(tryLog === false){
+        if(userVerify === false){
             throw new Error("Email or password is incorrect")
         }
 

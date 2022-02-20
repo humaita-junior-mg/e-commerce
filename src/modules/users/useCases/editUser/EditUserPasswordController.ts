@@ -9,9 +9,9 @@ export class EditUserPasswordController{
     handle(request: Request, response: Response): Response{
 
         const { id } = request.headers;
-        const { password } = request.body;
+        const { email, password } = request.body;
 
-        const userEdited = this.editUserPasswordUseCase.execute({ id: id as string, password })
+        const userEdited = this.editUserPasswordUseCase.execute({ id: id as string, password, email })
 
         return response.status(200).json(userEdited)
     }

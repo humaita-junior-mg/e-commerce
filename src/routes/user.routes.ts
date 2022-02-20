@@ -1,6 +1,5 @@
-import { response, Router } from "express"
-import { editUserEmailController } from "../modules/users/useCases/editUserEmail"
-import { editUserPasswordController } from "../modules/users/useCases/editUserPassword"
+import { Router } from "express"
+import { editUserPasswordController } from "../modules/users/useCases/editUser"
 import { listUsersController } from "../modules/users/useCases/listUsers"
 import { saveUsersController } from "../modules/users/useCases/saveUsers"
 import { turnAdminController } from "../modules/users/useCases/turnAdmin"
@@ -15,11 +14,7 @@ router.get("/", (request, response)=>{
     listUsersController.handle(request, response)
 })
 
-router.patch("/email", (request, response)=>{
-    editUserEmailController.handle(request, response)
-})
-
-router.patch("/password", (request, response)=>{
+router.put("/account", (request, response)=>{
     editUserPasswordController.handle(request, response)
 })
 

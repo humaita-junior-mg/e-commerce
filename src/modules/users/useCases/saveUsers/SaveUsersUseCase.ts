@@ -11,8 +11,9 @@ export class SaveUsersUseCase{
     constructor(private usersRepository: UsersRepository){}
 
     execute({name, email, password}: IRequest): void{
-        const verify = this.usersRepository.findUserByEmail(email)
-        
+        const listUsers = this.usersRepository.list()
+
+        const verify = listUsers.find(user=> user.email === email)
 
         if(verify){
             throw new Error("Email already exists!")

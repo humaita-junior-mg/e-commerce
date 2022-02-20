@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "E-commerce Documentation",
+        "description":  "This is a API for e-commerce",
+        "version": "1.0.0",
+        "contact": {
+            "email": "humaitaaraujomg@outlook.com"
+        }
+    },
+
+    "paths": {
+        "/user":{
+            "post":{
+                "tags": [ "User" ],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "properties":{
+                                "name":{
+                                    "type": "string"
+                                },
+                                "email":{
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            },
+                            "example":{
+                                "email": "user_email@example.com",
+                                "password": "password_example123"
+                            }
+                        }
+                    }
+                    }
+                },
+
+                "responses":{
+                    "201":{
+                        "description": "User Created"
+                    },
+                    "400":{
+                        "description": "Email Already Exists!"
+                    }
+                }
+            },
+
+            "get": {
+                "tags": [ "User" ],
+                "summary": "List users",
+                "description": "List all users",
+                "responses":{
+                    "200":{
+                        "description": "Users"
+                    },
+                    "400":{
+                        "description": "Error"
+                    }
+                }
+            }    
+        },
+
+        "/user/account":{
+            "put":{
+                "tags": [ "User" ],
+                "summary": "Edit user",
+                "description": "Edit user email or/and password",
+                "parameters": [{
+                    "name": "id",
+                    "in": "header",
+                    "required": true
+                }],
+                "requestBody": {
+                    "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "properties":{
+                                "email":{
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            },
+                            "example":{
+                                "email": "new_user_email@example.com",
+                                "password": "new_password_example123"
+                            }
+                        }
+                    }
+                    }
+                },
+
+                "responses":{
+                    "201":{
+                        "description": "User Edited"
+                    },
+                    "400":{
+                        "description": "Email Already Exists!"
+                    }
+                }
+            }
+        },
+
+        "/user/admin/{id}":{
+            "patch":{
+                "tags": [ "User" ],
+                "summary": "Turn Admin",
+                "description": "Turn user admin",
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "required": true
+                }],                
+                "responses":{
+                    "201":{
+                        "description": "User Edited"
+                    },
+                    "400":{
+                        "description": "Email Already Exists!"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -11,9 +11,8 @@ export interface IUserRepository{
     
     save({name, email, password}: ICreateUserDTO): void;
     findUserById(id: string): User;
-    findUserByEmail(email: string): User;
-    editEmail(usertoedit: User, email: string): User;
-    editPassword(usertoedit: User, password: string): User;
+    editUser(usertoedit: User, password: string, email: string): User;
+    turnAdmin(userturnadmin: User): User;
     list(): User[];
 
 }

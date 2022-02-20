@@ -34,27 +34,28 @@ export class UsersRepository implements IUserRepository{
 
     }
 
-    findUserByEmail(email: string): User{
+    editUser(usertoedit: User, password: string, email: string): User {
 
-        return this.users.find(user => user.email === email)
+        if(!password){
+            Object.assign(usertoedit, {
+                email,
+                updated_at: new Date()
+            })
+    
+            return usertoedit
+        }
 
-    }
-
-    editEmail(usertoedit: User, email: string): User {
-        
+        if(!email){
+            Object.assign(usertoedit, {
+                password: bcrypt.hashSync(password, 10),
+                updated_at: new Date()
+            })
+    
+            return usertoedit
+        }
 
         Object.assign(usertoedit, {
-            email,
-            updated_at: new Date()
-        })
-
-        return usertoedit
-
-    }
-
-    editPassword(usertoedit: User, password: string): User {
-
-        Object.assign(usertoedit, {
+            email: email,
             password: bcrypt.hashSync(password, 10),
             updated_at: new Date()
         })
@@ -76,12 +77,5 @@ export class UsersRepository implements IUserRepository{
         })
 
         return userturnadmin
-    }
-
-    login(usertologin: User, password: string): boolean{
-
-        const userVerify = bcrypt.compareSync(password, usertologin.password)  
-
-        return userVerify
     }
 }
